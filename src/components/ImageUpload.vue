@@ -5,7 +5,7 @@
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-dashboard"></i>Resim Yükle</h1>
+          <h1><i class="fa fa-dashboard"></i>Renk Oluştur</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -16,7 +16,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
-            <h3 class="tile-title">Resim Yükle</h3>
+            <h3 class="tile-title">Renk Oluştur</h3>
             <div class="tile-body">
               <form>
                 <div class="form-group">
@@ -49,6 +49,11 @@
                     </option>
                   </select>
                 </div>
+                <div class="form-group">
+                       <label class="control-label">Renk Adı: </label>   
+                 <input type="text" id="colorname" >
+
+                </div>
                 <div class="form-group row">
                   <label class="control-label col-md-3">Resim Yükleme</label>
                   <div class="col-md-8">
@@ -80,34 +85,7 @@
                         </span>
                       </div>
                     </div>
-                    <div
-                      class="fileupload fileupload-new"
-                      data-provides="fileupload"
-                    >
-                      <p style="color: red">{{ fileWarn }}</p>
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div
-                            class="fileupload-preview fileupload-exists thumbnail"
-                            style="
-                              max-width: 200px;
-                              max-height: 150px;
-                              line-height: 20px;
-                            "
-                          ></div>
-                        </div>
-                      </div>
-                      <div>
-                        <span class="btn btn-theme02 btn-file">
-                          <input
-                            id="file2"
-                            type="file"
-                            ref="file2"
-                            class="default"
-                          />
-                        </span>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </form>
@@ -143,7 +121,7 @@ export default {
       result: {
         category_id: "",
         img_url: "",
-        img_color_url: "",
+        color_name:"",
         subcategory_id: "",
       },
 
@@ -273,14 +251,6 @@ export default {
         })
         .then(function (response) {
           // console.log(response);
-
-          if (response.data.result) {
-            result.img_color_url = response.data.data;
-
-            sendData();
-          } else {
-            //conso.log("işlem başarısız");
-          }
         })
         .catch(function (error) {
           //conso.log(error);
@@ -293,7 +263,7 @@ export default {
       var datas = {
         subcategory_id: this.subValue,
         img_url: this.result.img_url,
-        img_color_url: this.result.img_color_url,
+        color_name:this.result.color_name
       };
 
       axios
