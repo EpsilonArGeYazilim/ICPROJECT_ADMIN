@@ -29,7 +29,7 @@
                 <div class="form-group">
                   <label class="control-label">Alt Kategori Adı:</label>
                   <input
-                    v-model="result.subname1"
+                    v-model="result.sub1_name"
                     class="form-control"
                     type="text"
                     placeholder="Alt Kategori Adı"
@@ -38,7 +38,7 @@
                 <div class="form-group">
                   <label class="control-label">2.Alt Kategori Adı:</label>
                   <input
-                    v-model="result.subname2"
+                    v-model="result.sub2_name"
                     class="form-control"
                     type="text"
                     placeholder="2.Alt Kategori Adı"
@@ -68,8 +68,8 @@ export default {
     return {
       result: {
         category_name: "",
-        subname1: "",
-        subname2: "",
+        sub1_name: "",
+        sub2_name: "",
       },
       category: [],
       subcategory: []
@@ -87,8 +87,8 @@ export default {
 
       var datas = {
         category_name: this.result.category_name,
-        subname1: this.result.subname1,
-        subname2: this.result.subname2,
+        sub1_name: this.result.sub1_name,
+        sub2_name: this.result.sub2_name,
       };
 
       axios

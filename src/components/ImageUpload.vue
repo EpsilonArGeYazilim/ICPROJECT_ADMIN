@@ -35,23 +35,28 @@
                 <div class="form-group">
                   <label class="control-label">Alt Kategori giriniz:</label>
                   <select
-                    @change="onChangeSub($event)"
+                    @change="onChangeColor($event)"
                     name="deneme"
                     id="deneme2"
                   >
-                    <option selected="true">Seçiniz</option>
-                    <option
-                      v-for="(item, index) in sub_category"
-                      :key="index"
-                      :value="item.subcategory_id"
+                  <option selected="true">
+                      Seçiniz
+                    </option>
+                    <option 
+                      value="0"
                     >
-                      {{ item.name }}
+                      {{ sub1_name }}
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      {{ sub2_name }}
                     </option>
                   </select>
                 </div>
                 <div class="form-group">
-                       <label class="control-label">Renk Adı: </label>   
-                 <input type="text" id="colorname" >
+                       <label class="control-label" >Renk Adı: </label>
+                 <input type="text" id="colorname" v-model="color_name">
 
                 </div>
                 <div class="form-group row">
@@ -119,13 +124,15 @@ export default {
   data() {
     return {
       result: {
-        category_id: "",
-        img_url: "",
-        color_name:"",
-        subcategory_id: "",
-      },
+              color_url:""
 
-      subValue: "",
+        
+      },
+      sub1_name:"",
+      sub2_name:"",
+      category_id:"",
+      colorValue: "",
+      color_name:"",
       category: {},
       sub_category: {},
       file: "",
@@ -139,9 +146,9 @@ export default {
     axios
       .get(dataUrl)
       .then((response) => {
-        //conso.log(response);
+        console.log(response);
         this.category = response.data.categories;
-        //console.log(this.category)
+        console.log(this.category)
       })
       .catch((err) => {
         //conso.log(err.response);
@@ -152,34 +159,25 @@ export default {
     reload: function () {
       location.reload();
     },
-    onChangeSub(event) {
-      this.subValue = event.target.value;
-    },
+    
     onChange(event) {
-      let dataUrl =
-        store.state.base_url +
-        "Category/getAllSubCategoryCategoryId.php?key=123";
-
-      var datas = {
-        category_id: event.target.value,
-      };
-
-      axios
-        .post(dataUrl, JSON.stringify(datas))
-        .then((response) => {
-          this.sub_category = response.data.data;
-          // console.log(this.sub_category);
-        })
-        .catch((err) => {
-          //conso.log(err.response);
-        });
+             this.category_id= event.target.value;
+             this.sub1_name= this.category[this.category_id].sub1_name;
+              this.sub2_name= this.category[this.category_id].sub2_name;
+     
     },
+    onChangeColor(event) {
+             this.colorValue= event.target.value;
+             console.log(this.colorValue);             
+     
+    },
+
     uploadFile: function () {
       this.file = this.$refs.file.files[0];
 
-      var result = this.result;
-      var uploadFile2 = this.uploadFile2;
+      var sendData = this.sendData;
 
+      var result =this.result
       //conso.log(this.file);
       /*if (this.file.size > 1500000) {
          this.fileWarn = "Yükleyeceğiniz Dosya Boyutu 1.5 Mb'yi Aşamaz!  " +" Dosya Boyutunuz : "+ this.file.size/1000000 +"Mb" ;
@@ -202,18 +200,16 @@ export default {
           },
         })
         .then(function (response) {
-          //console.log(response);
 
           if (response.data.result) {
-            // console.log("işlem başarılı");
 
-            result.img_url = response.data.data;
-            //console.log(result.img_url);
-
-            uploadFile2();
+            result.color_url = response.data.data;
+            console.log(result.color_url);
+            console.log("deneme");
+            sendData();
             // console.log("uploadfile2");
           } else {
-            //conso.log("işlem başarısız");
+            //console.log("işlem başarısız");
           }
         })
         .catch(function (error) {
@@ -221,62 +217,50 @@ export default {
         });
     },
 
-    uploadFile2: function () {
-      this.file2 = this.$refs.file2.files[0];
-
-      var result = this.result;
-      var sendData = this.sendData;
-      //console.log("file2")
-      //console.log(this.file2);
-
-      //conso.log(this.file);
-      /*if (this.file2.size > 1500000) {
-        //conso.log("dosya boyutu büyük");
-        return;
-      }*/
-
-      let formData = new FormData();
-      formData.append("file", this.file2);
-      var password = "root";
-      var query =
-        store.state.img_upload_url +
-        "admin_upload_img_color.php?password=" +
-        password;
-
-      axios
-        .post(query, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then(function (response) {
-          // console.log(response);
-        })
-        .catch(function (error) {
-          //conso.log(error);
-        });
-    },
+    
 
     sendData: function () {
-      var url = store.state.img_base_url + "createimage.php?key=123";
-
       var datas = {
-        subcategory_id: this.subValue,
-        img_url: this.result.img_url,
-        color_name:this.result.color_name
+        color_name: this.color_name,
+        color_url: this.result.color_url,
+        category_id: this.category_id
       };
 
-      axios
+      if(this.colorValue == "0"){
+        var url = store.state.base_url + "Category/createColor1.php?key=123";
+
+          axios
         .post(url, JSON.stringify(datas))
         .then((response) => {
           if (response.data.result == true) {
-            location.reload();
+            //location.reload();
           }
           //conso.log(response);
         })
         .catch((error) => {
           //conso.log(error.response);
         });
+      }
+      else if(this.colorValue == "1"){
+        var url = store.state.base_url + "Category/createColor2.php?key=123";
+
+          axios
+        .post(url, JSON.stringify(datas))
+        .then((response) => {
+          if (response.data.result == true) {
+            //location.reload();
+          }
+          //conso.log(response);
+        })
+        .catch((error) => {
+          //conso.log(error.response);
+        });
+      }
+      else{
+        console.log("Tebrikler bunu başardınız");
+      }
+
+      
     },
   },
 };
