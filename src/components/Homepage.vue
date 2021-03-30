@@ -24,6 +24,11 @@
             <span class="app-menu__label">Resim Yükle</span>
           </router-link>
         </li>
+        <li class="btn btn-primary btn-block">
+          <router-link class="app-menu__item" to="/create_image" tag="a">
+            <span class="app-menu__label">Resim Oluşturma</span>
+          </router-link>
+        </li>
       </div>
     </main>
   </div>

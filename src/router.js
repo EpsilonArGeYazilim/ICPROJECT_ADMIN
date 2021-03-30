@@ -5,6 +5,7 @@ import Login from "./components/Login.vue";
 import Homepage from "./components/Homepage.vue";
 import Category from "./components/Category.vue";
 import ImageUpload from "./components/ImageUpload.vue";
+import CreateImage from "./components/CreateImage.vue";
 
 import store from "./store";
 
@@ -58,6 +59,11 @@ const routes = [
     path: "/image_upload",
     name: "image_upload",
     component: ImageUpload
+  },
+  {
+    path: "/create_image",
+    name: "create_image",
+    component: CreateImage
   }
 ];
 export const router = new VueRouter({
