@@ -95,7 +95,7 @@ export default {
         .post(url, JSON.stringify(datas))
         .then((response) => {
           if (response.data.result == true) {
-            location.reload();
+            window.location.href='/#/renk_olustur';
           }
           //conso.log(response);
         })

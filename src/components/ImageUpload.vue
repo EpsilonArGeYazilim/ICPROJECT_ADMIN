@@ -148,7 +148,7 @@ export default {
       .then((response) => {
         console.log(response);
         this.category = response.data.categories;
-        console.log(this.category)
+        //console.log(this.category)
       })
       .catch((err) => {
         //conso.log(err.response);
@@ -233,7 +233,7 @@ export default {
         .post(url, JSON.stringify(datas))
         .then((response) => {
           if (response.data.result == true) {
-            //location.reload();
+            window.location.href='/#/resim_yukle';
           }
           //conso.log(response);
         })
@@ -248,7 +248,7 @@ export default {
         .post(url, JSON.stringify(datas))
         .then((response) => {
           if (response.data.result == true) {
-            //location.reload();
+            window.location.href='/#/resim_yukle';
           }
           //conso.log(response);
         })

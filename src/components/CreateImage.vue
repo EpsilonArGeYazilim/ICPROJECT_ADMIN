@@ -33,18 +33,21 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label class="control-label"></label>   
+                  <label class="control-label">
+                    Alt Kategori :
+                      {{ this.sub1_name }}
+                      </label>   
                 </div>
                 <div class="form-group">
                   <label class="control-label">Color1 Renkleri:</label>
                   <select
-                    @change="onChangeSub($event)"
+                     @change="onChangeSub1($event)"
                     name="deneme"
                     id="deneme2"
                   >
                     <option selected="true">Seçiniz</option>
                     <option
-                      v-for="(item, index) in color1datas"
+                      v-for="(item, index) in color1"
                       :key="index"
                       :value="item.color1_id"
                     >
@@ -53,9 +56,15 @@
                   </select>
                 </div>
                 <div class="form-group">
+                  <label class="control-label">
+                    Alt Kategori :
+                      {{ this.sub2_name }}
+                      </label>   
+                </div>
+                <div class="form-group">
                   <label class="control-label">Color2 Renkleri:</label>
                   <select
-                    @change="onChangeSub($event)"
+                     @change="onChangeSub2($event)"
                     name="deneme"
                     id="deneme2"
                   >
@@ -133,12 +142,16 @@ export default {
   data() {
     return {
       result: {
-        category_id: "",
         img_url: "",
-        sub1_name:"",
-        sub2_name:""
+        
       },
-
+      category_id: "",
+      color1:"",
+      color2:"",
+      color1_id:"",
+      color2_id:"",
+      sub1_name:"",
+      sub2_name:"",
       subValue: "",
       category: {},
       file: "",
@@ -164,8 +177,11 @@ export default {
     reload: function () {
       location.reload();
     },
-    onChangeSub(event) {
-      this.subValue = event.target.value;
+    onChangeSub1(event) {
+      this.color1_id = event.target.value;
+    },
+    onChangeSub2(event) {
+      this.color2_id = event.target.value;
     },
     onChange(event) {
       let dataUrl =
@@ -174,13 +190,19 @@ export default {
       var datas = {
         category_id: event.target.value
       };
-
+      this.category_id=datas.category_id;
+      console.log(this.category_id);
+      this.sub1_name= this.category[datas.category_id].sub1_name
+      this.sub2_name= this.category[datas.category_id].sub2_name
+      
       axios
         .post(dataUrl, JSON.stringify(datas))
         .then((response) => {
           this.color1 = response.data.color1datas;
-          console.log(this.color1);
-          color1_name =this.color1[0].color1_name;
+          this.color1_name =this.color1.color1_name;
+
+          this.color2 = response.data.color2datas;
+          this.color2_name =this.color2.color2_name;
         })
         .catch((err) => {
           //conso.log(err.response);
@@ -188,7 +210,7 @@ export default {
     },
     uploadFile: function () {
       this.file = this.$refs.file.files[0];
-
+      var sendData = this.sendData;
       var result = this.result;
       //conso.log(this.file);
       /*if (this.file.size > 1500000) {
@@ -220,7 +242,7 @@ export default {
             result.img_url = response.data.data;
             //console.log(result.img_url);
 
-            uploadFile2();
+            sendData();
             // console.log("uploadfile2");
           } else {
             //conso.log("işlem başarısız");
@@ -233,12 +255,12 @@ export default {
 
 
     sendData: function () {
-      var url = store.state.img_base_url + "createimage.php?key=123";
-
+      var url = store.state.base_url + "Category/createImages.php?key=123";
       var datas = {
-        color1_id: this.subValue,
-        color2_id:this.subValue,
-        img_url: this.result.img_url
+        color1_id: this.color1_id,
+        color2_id:this.color2_id,
+        img_url: this.result.img_url,
+        category_id: this.category_id
       };
 
       axios

@@ -56,13 +56,13 @@ const routes = [
     component: Category
   },
   {
-    path: "/image_upload",
-    name: "image_upload",
+    path: "/renk_olustur",
+    name: "renk_olustur",
     component: ImageUpload
   },
   {
-    path: "/create_image",
-    name: "create_image",
+    path: "/resim_yukle",
+    name: "resim_yukle",
     component: CreateImage
   }
 ];

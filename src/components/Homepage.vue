@@ -20,13 +20,13 @@
           </router-link>
         </li>
         <li class="btn btn-primary btn-block">
-          <router-link class="app-menu__item" to="/image_upload" tag="a">
-            <span class="app-menu__label">Resim Yükle</span>
+          <router-link class="app-menu__item" to="/renk_olustur" tag="a">
+            <span class="app-menu__label">Renk Oluştur</span>
           </router-link>
         </li>
         <li class="btn btn-primary btn-block">
-          <router-link class="app-menu__item" to="/create_image" tag="a">
-            <span class="app-menu__label">Resim Oluşturma</span>
+          <router-link class="app-menu__item" to="/resim_yukle" tag="a">
+            <span class="app-menu__label">Resim Yükle</span>
           </router-link>
         </li>
       </div>
