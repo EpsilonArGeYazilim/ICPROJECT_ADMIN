@@ -72,11 +72,9 @@ export default {
         sub2_name: "",
       },
       category: [],
-      subcategory: []
+      subcategory: [],
     };
   },
-
- 
 
   methods: {
     reload: function () {
@@ -90,18 +88,23 @@ export default {
         sub1_name: this.result.sub1_name,
         sub2_name: this.result.sub2_name,
       };
-
-      axios
-        .post(url, JSON.stringify(datas))
-        .then((response) => {
-          if (response.data.result == true) {
-            window.location.href='/#/renk_olustur';
-          }
-          //conso.log(response);
-        })
-        .catch((error) => {
-          //conso.log(error.response);
-        });
+      if (
+        datas.category_name != "" &&
+        datas.sub1_name != "" &&
+        datas.sub2_name != ""
+      ) {
+        axios
+          .post(url, JSON.stringify(datas))
+          .then((response) => {
+            if (response.data.result == true) {
+              window.location.href = "/#/renk_olustur";
+            }
+            //conso.log(response);
+          })
+          .catch((error) => {
+            //conso.log(error.response);
+          });
+      }
     },
   },
 };

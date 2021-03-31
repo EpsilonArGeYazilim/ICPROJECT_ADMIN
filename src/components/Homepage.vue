@@ -61,19 +61,6 @@ export default {
                 this.$store.dispatch("logout")
             }
         },
-  mounted() {
-    var results = this.result;
-    let dataUrl = store.state.base_url + "Category/getAllImages.php?key=123";
-    axios
-      .get(dataUrl)
-      .then((response) => {
-        //conso.log(response);
-        this.result = response.data;
-      })
-      .catch((err) => {
-        //conso.log(err.response);
-      });
-  },
   onSubmit() {
     this.$store.dispatch("login", { ...this.user }).then((response) => {
       if (this.$store.state.loginResult) {

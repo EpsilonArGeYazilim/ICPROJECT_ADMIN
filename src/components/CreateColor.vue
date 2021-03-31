@@ -39,25 +39,18 @@
                     name="deneme"
                     id="deneme2"
                   >
-                  <option selected="true">
-                      Seçiniz
-                    </option>
-                    <option 
-                      value="0"
-                    >
+                    <option selected="true">Seçiniz</option>
+                    <option value="0">
                       {{ sub1_name }}
                     </option>
-                    <option
-                      value="1"
-                    >
+                    <option value="1">
                       {{ sub2_name }}
                     </option>
                   </select>
                 </div>
                 <div class="form-group">
-                       <label class="control-label" >Renk Adı: </label>
-                 <input type="text" id="colorname" v-model="color_name">
-
+                  <label class="control-label">Renk Adı: </label>
+                  <input type="text" id="colorname" v-model="color_name" />
                 </div>
                 <div class="form-group row">
                   <label class="control-label col-md-3">Resim Yükleme</label>
@@ -90,7 +83,6 @@
                         </span>
                       </div>
                     </div>
-                    
                   </div>
                 </div>
               </form>
@@ -106,6 +98,13 @@
                     <i class="fa fa-fw fa-lg fa-check-circle"></i>Kaydet</button
                   >&nbsp;&nbsp;&nbsp;
                 </div>
+                <ul class="app-breadcrumb breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="#/resim_yukle">Resim Yükle</a>
+                  </li>
+                </ul>
+                <br /><br />
+                <p>Renk ekledikten sonra resim yüklemeyi unutmayın !!!</p>
               </div>
             </div>
           </div>
@@ -124,15 +123,13 @@ export default {
   data() {
     return {
       result: {
-              color_url:""
-
-        
+        color_url: "",
       },
-      sub1_name:"",
-      sub2_name:"",
-      category_id:"",
+      sub1_name: "",
+      sub2_name: "",
+      category_id: "",
       colorValue: "",
-      color_name:"",
+      color_name: "",
       category: {},
       sub_category: {},
       file: "",
@@ -159,25 +156,25 @@ export default {
     reload: function () {
       location.reload();
     },
-    
+
     onChange(event) {
-             this.category_id= event.target.value;
-             this.sub1_name= this.category[this.category_id].sub1_name;
-              this.sub2_name= this.category[this.category_id].sub2_name;
-     
+      this.category_id = event.target.value;
+      this.sub1_name = this.category[this.category_id].sub1_name;
+      this.sub2_name = this.category[this.category_id].sub2_name;
     },
     onChangeColor(event) {
-             this.colorValue= event.target.value;
-             console.log(this.colorValue);             
-     
+      this.colorValue = event.target.value;
+      console.log(this.colorValue);
     },
 
     uploadFile: function () {
       this.file = this.$refs.file.files[0];
-
+      var datas={
+        color_name:this.color_name
+      };
       var sendData = this.sendData;
 
-      var result =this.result
+      var result = this.result;
       //conso.log(this.file);
       /*if (this.file.size > 1500000) {
          this.fileWarn = "Yükleyeceğiniz Dosya Boyutu 1.5 Mb'yi Aşamaz!  " +" Dosya Boyutunuz : "+ this.file.size/1000000 +"Mb" ;
@@ -190,9 +187,9 @@ export default {
       var password = "root";
       var query =
         store.state.img_upload_url +
-        "admin_upload_img.php?password=" +
+        "admin_upload_img_color.php?password=" +
         password;
-
+      if (datas.color_name != "") {
       axios
         .post(query, formData, {
           headers: {
@@ -200,13 +197,13 @@ export default {
           },
         })
         .then(function (response) {
-
           if (response.data.result) {
-
             result.color_url = response.data.data;
             console.log(result.color_url);
             console.log("deneme");
+            
             sendData();
+            
             // console.log("uploadfile2");
           } else {
             //console.log("işlem başarısız");
@@ -215,51 +212,47 @@ export default {
         .catch(function (error) {
           //conso.log(error);
         });
+        }
     },
-
-    
 
     sendData: function () {
       var datas = {
         color_name: this.color_name,
         color_url: this.result.color_url,
-        category_id: this.category_id
+        category_id: this.category_id,
       };
-
-      if(this.colorValue == "0"){
-        var url = store.state.base_url + "Category/createColor1.php?key=123";
-
-          axios
-        .post(url, JSON.stringify(datas))
-        .then((response) => {
-          if (response.data.result == true) {
-            window.location.href='/#/resim_yukle';
-          }
-          //conso.log(response);
-        })
-        .catch((error) => {
-          //conso.log(error.response);
-        });
-      }
-      else if(this.colorValue == "1"){
-        var url = store.state.base_url + "Category/createColor2.php?key=123";
+      
+        if (this.colorValue == "0") {
+          var url = store.state.base_url + "Category/createColor1.php?key=123";
 
           axios
-        .post(url, JSON.stringify(datas))
-        .then((response) => {
-          if (response.data.result == true) {
-            window.location.href='/#/resim_yukle';
-          }
-          //conso.log(response);
-        })
-        .catch((error) => {
-          //conso.log(error.response);
-        });
-      }
-      else{
-        console.log("Tebrikler bunu başardınız");
-      }
+            .post(url, JSON.stringify(datas))
+            .then((response) => {
+              if (response.data.result == true) {
+                location.reload();
+              }
+              //conso.log(response);
+            })
+            .catch((error) => {
+              //conso.log(error.response);
+            });
+        } else if (this.colorValue == "1") {
+          var url = store.state.base_url + "Category/createColor2.php?key=123";
 
+          axios
+            .post(url, JSON.stringify(datas))
+            .then((response) => {
+              if (response.data.result == true) {
+                location.reload();
+              }
+              //conso.log(response);
+            })
+            .catch((error) => {
+              //conso.log(error.response);
+            });
+        } else {
+          console.log("Tebrikler bunu başardınız");
+        }
       
     },
   },

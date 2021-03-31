@@ -4,7 +4,7 @@ import VueRouter from "vue-router";
 import Login from "./components/Login.vue";
 import Homepage from "./components/Homepage.vue";
 import Category from "./components/Category.vue";
-import ImageUpload from "./components/ImageUpload.vue";
+import CreateColor from "./components/CreateColor.vue";
 import CreateImage from "./components/CreateImage.vue";
 
 import store from "./store";
@@ -58,7 +58,7 @@ const routes = [
   {
     path: "/renk_olustur",
     name: "renk_olustur",
-    component: ImageUpload
+    component: CreateColor
   },
   {
     path: "/resim_yukle",
