@@ -9,7 +9,8 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="/anasayfa">anasayfa</a></li>
+          <li class="breadcrumb-item"><router-link to="/anasayfa" tag="a">Anasayfa
+          </router-link></li>
         </ul>
       </div>
 
@@ -191,7 +192,6 @@ export default {
         category_id: event.target.value
       };
       this.category_id=datas.category_id;
-      console.log(this.category_id);
       this.sub1_name= this.category[datas.category_id].sub1_name
       this.sub2_name= this.category[datas.category_id].sub2_name
       

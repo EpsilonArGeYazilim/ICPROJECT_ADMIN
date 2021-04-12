@@ -9,7 +9,8 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="/anasayfa">anasayfa</a></li>
+          <li class="breadcrumb-item"><router-link to="/anasayfa" tag="a">Anasayfa
+          </router-link></li>
         </ul>
       </div>
 
@@ -100,7 +101,8 @@
                 </div>
                 <ul class="app-breadcrumb breadcrumb">
                   <li class="breadcrumb-item">
-                    <a href="#/resim_yukle">Resim Yükle</a>
+                    <router-link to="/resim_yukle" tag="a">Resim Yükle
+          </router-link>
                   </li>
                 </ul>
                 <br /><br />
@@ -143,7 +145,6 @@ export default {
     axios
       .get(dataUrl)
       .then((response) => {
-        console.log(response);
         this.category = response.data.categories;
         //console.log(this.category)
       })
@@ -164,7 +165,6 @@ export default {
     },
     onChangeColor(event) {
       this.colorValue = event.target.value;
-      console.log(this.colorValue);
     },
 
     uploadFile: function () {
@@ -199,8 +199,6 @@ export default {
         .then(function (response) {
           if (response.data.result) {
             result.color_url = response.data.data;
-            console.log(result.color_url);
-            console.log("deneme");
             
             sendData();
             

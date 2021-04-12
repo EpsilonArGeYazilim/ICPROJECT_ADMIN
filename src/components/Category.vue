@@ -8,7 +8,8 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="/anasayfa">anasayfa</a></li>
+          <li class="breadcrumb-item"><router-link to="/anasayfa" tag="a">Anasayfa
+          </router-link></li>
         </ul>
       </div>
       <div class="row">
@@ -23,7 +24,7 @@
                     v-model="result.category_name"
                     class="form-control"
                     type="text"
-                    placeholder="Kategori Adı"
+                    placeholder="Örnek: Mutfak"
                   />
                 </div>
                 <div class="form-group">
@@ -32,7 +33,7 @@
                     v-model="result.sub1_name"
                     class="form-control"
                     type="text"
-                    placeholder="Alt Kategori Adı"
+                    placeholder="Örnek: Sandalye"
                   />
                 </div>
                 <div class="form-group">
@@ -41,7 +42,7 @@
                     v-model="result.sub2_name"
                     class="form-control"
                     type="text"
-                    placeholder="2.Alt Kategori Adı"
+                    placeholder="Örnek: Masa"
                   />
                 </div>
               </form>
@@ -51,6 +52,14 @@
                 <i class="fa fa-fw fa-lg fa-check-circle"></i>Kaydet</button
               >&nbsp;&nbsp;&nbsp;
             </div>
+            <ul class="app-breadcrumb breadcrumb">
+                  <li class="breadcrumb-item">
+                    <router-link to="/renk_olustur" tag="a">Renk Oluştur
+          </router-link>
+                  </li>
+                </ul>
+                <br /><br />
+                <p>Kategori ekledikten sonra renk eklemeyi unutmayın !!!</p>
           </div>
         </div>
       </div>
@@ -97,7 +106,7 @@ export default {
           .post(url, JSON.stringify(datas))
           .then((response) => {
             if (response.data.result == true) {
-              window.location.href = "/#/renk_olustur";
+             location.reload();
             }
             //conso.log(response);
           })
